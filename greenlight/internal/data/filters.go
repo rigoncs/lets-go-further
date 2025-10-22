@@ -43,3 +43,24 @@ func (f Filters) limit() int {
 func (f Filters) offset() int {
 	return (f.Page - 1) * f.PageSize
 }
+
+type MetaData struct {
+	CurrentPage  int `json:"current_page,omitzero"`
+	PageSize     int `json:"page_size,omitzero"`
+	FirstPage    int `json:"first_page,omitzero"`
+	LastPage     int `json:"last_page,omitzero"`
+	TotalRecords int `json:"total_records,omitzero"`
+}
+
+func calculateMetadata(totalRecords, page, pageSize int) MetaData {
+	if totalRecords == 0 {
+		return MetaData{}
+	}
+	return MetaData{
+		CurrentPage:  page,
+		PageSize:     pageSize,
+		FirstPage:    1,
+		LastPage:     (totalRecords + pageSize - 1) / pageSize,
+		TotalRecords: totalRecords,
+	}
+}
