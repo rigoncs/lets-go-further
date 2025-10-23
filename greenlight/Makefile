@@ -1,3 +1,5 @@
+include .envrc
+
 ## help: print this help message
 .PHONY: help
 help:
@@ -11,7 +13,7 @@ confirm:
 .PHONY: run/api
 ## run/api: run the cmd/api application
 run/api:
-	go run ./cmd/api
+	go run ./cmd/api -db-dsn=${GREENLIGHT_DB_DSN}
 
 .PHONY: db/psql
 ## db/psql: connect to the database using psql
